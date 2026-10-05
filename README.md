@@ -1,6 +1,61 @@
-# CAST-Slide
+# CAST-Slide: Continual Model Merging with Confidence-Aligned Soft-Target Adaptation on Whole-Slide Images Analysis
 
 CAST-Slide is a test-time adaptation framework for continual whole-slide image classification. It adapts a continually merged TITAN slide encoder without source data while controlling noisy sub-bags, pseudo-target errors, representation drift, and uncertain task routing.
+
+## Highlights
+
+CAST-Slide improves the balance between classification performance and continual-learning stability while correcting uncertain task-level prompt routing under distribution shift. The following OOD results summarize its gains in backward transfer, TCP routing, and forgetting behavior.
+
+<table>
+  <tr>
+    <td width="33.33%" align="center">
+      <a href="images/cast_slide_accuracy_bwt_tradeoff_ood.pdf">
+        <img src="images/cast_slide_accuracy_bwt_tradeoff_ood.png" alt="Accuracy and backward-transfer trade-off on OOD data" width="100%">
+      </a>
+    </td>
+    <td width="33.33%" align="center">
+      <a href="images/cast_slide_tcp_routing_outcome_ood.pdf">
+        <img src="images/cast_slide_tcp_routing_outcome_ood.png" alt="TCP routing corrections made by CAST-Slide on OOD data" width="100%">
+      </a>
+    </td>
+    <td width="33.33%" align="center">
+      <a href="images/cast_slide_accuracy_fgt_tradeoff_ood.pdf">
+        <img src="images/cast_slide_accuracy_fgt_tradeoff_ood.png" alt="Accuracy and forgetting trade-off on OOD data" width="100%">
+      </a>
+    </td>
+  </tr>
+  <tr>
+    <td align="center"><strong>Accuracy vs. backward transfer</strong></td>
+    <td align="center"><strong>Task-routing correction</strong></td>
+    <td align="center"><strong>Accuracy vs. forgetting</strong></td>
+  </tr>
+</table>
+
+Click any panel to open its publication-quality PDF.
+
+## Framework
+
+CAST-Slide combines reliability-gated sub-bag selection, anchor-verified soft targets, drift-controlled adaptation, and confidence-gated task-to-class prompt inference in a unified test-time pipeline.
+
+<p align="center">
+  <a href="images/CAST-Slide.png">
+    <img src="images/CAST-Slide.png" alt="Overview of the CAST-Slide framework" width="100%">
+  </a>
+</p>
+
+<p align="center">
+  <a href="images/CAST-Slide.pptx"><strong>Download the editable framework diagram (PPTX)</strong></a>
+</p>
+
+## Attention Consistency
+
+The attention visualization below illustrates how CAST-Slide preserves spatially coherent diagnostic evidence across the continual stream. The high-resolution source is available by clicking the figure.
+
+<p align="center">
+  <a href="images/heatmap.pdf">
+    <img src="images/heatmap.png" alt="CAST-Slide attention consistency across continual-learning stages" width="96%">
+  </a>
+</p>
 
 ## Environment Setup
 

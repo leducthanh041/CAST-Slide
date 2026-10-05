@@ -117,6 +117,9 @@ docs_old/
 /scripts/random_search*.sh
 /scripts/collect_*.sh
 /scripts/nvidia-smi.sh
+/scripts/generate_cast_slide_heatmaps.sh
+/configs/attention_maps/
+/tools/heatmaps/
 /tools/plot/
 /tools/statistical_significance/
 /tools/random_search*.py
