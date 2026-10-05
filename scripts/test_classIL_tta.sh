@@ -90,7 +90,9 @@ TTA_TOP_RATIO="${TTA_TOP_RATIO:-0.5}"       # confident sub-bag ratio
 TTA_ALPHA="${TTA_ALPHA:-0.5}"               # task loss weight
 TTA_L2_ANCHOR_BETA="${TTA_L2_ANCHOR_BETA:-1.0}"
 TTA_LR="${TTA_LR:-1e-4}"                    # LN optimizer lr
-TTA_N_STEPS="${TTA_N_STEPS:-5}"             # best continual setting from n_steps sweep
+TTA_N_STEPS="${TTA_N_STEPS:-}"
+TTA_TCP_N_STEPS="${TTA_TCP_N_STEPS:-5}"
+TTA_NAIVE_N_STEPS="${TTA_NAIVE_N_STEPS:-5}"
 TTA_PARAM_SCOPE="${TTA_PARAM_SCOPE:-ln_only}"  # ln_only | full
 TTA_ENTROPY_THRESHOLD="${TTA_ENTROPY_THRESHOLD:-0.4}"  # WSI-level filter
 TTA_GAMMA="${TTA_GAMMA:-0.5}"                  # JSD task-agreement weight
@@ -195,7 +197,7 @@ echo "[INFO] tta_result_csv=$TTA_RESULT_CSV"
 echo "[INFO] tta_efficiency_json=$TTA_EFFICIENCY_JSON"
 echo "[INFO] cuda_visible_devices=${CUDA_VISIBLE_DEVICES:-<unset>}"
 echo "[INFO] tta_variants=$TTA_VARIANTS"
-echo "[INFO] TTA M=$TTA_M | K_sub=$TTA_K_SUB | top_ratio=$TTA_TOP_RATIO | alpha=$TTA_ALPHA | regularizer=l2_anchor | l2_anchor_beta=$TTA_L2_ANCHOR_BETA | lr=$TTA_LR | n_steps=$TTA_N_STEPS | param_scope=$TTA_PARAM_SCOPE | entropy_threshold=$TTA_ENTROPY_THRESHOLD | tau_task=$TTA_TAU_TASK | naive_use_task_entropy=$TTA_NAIVE_USE_TASK_ENTROPY | reset=$RESET_LABEL | verbose_loss=$TTA_VERBOSE_LOSS"
+echo "[INFO] TTA M=$TTA_M | K_sub=$TTA_K_SUB | top_ratio=$TTA_TOP_RATIO | alpha=$TTA_ALPHA | regularizer=l2_anchor | l2_anchor_beta=$TTA_L2_ANCHOR_BETA | lr=$TTA_LR | n_steps_override=${TTA_N_STEPS:-<none>} | tcp_n_steps=$TTA_TCP_N_STEPS | naive_n_steps=$TTA_NAIVE_N_STEPS | param_scope=$TTA_PARAM_SCOPE | entropy_threshold=$TTA_ENTROPY_THRESHOLD | tau_task=$TTA_TAU_TASK | naive_use_task_entropy=$TTA_NAIVE_USE_TASK_ENTROPY | reset=$RESET_LABEL | verbose_loss=$TTA_VERBOSE_LOSS"
 echo "[INFO] task_objective gamma=$TTA_GAMMA | select_mode=$TTA_SELECT_MODE | use_task_diversity=$TTA_USE_TASK_DIVERSITY | no_task_agreement=$TTA_NO_TASK_AGREEMENT"
 echo "[INFO] prompt_adapt no_teacher=$TTA_NO_TEACHER | ema_alpha=$TTA_EMA_ALPHA | no_adapt_prompts=$TTA_NO_ADAPT_PROMPTS | ema_alpha_prompt=$TTA_EMA_ALPHA_PROMPT | delta_margin=$TTA_DELTA_MARGIN | tp_anchor_beta=$TTA_TP_ANCHOR_BETA | gamma_margin=$TTA_GAMMA_MARGIN | no_reset_prompt_per_task=$TTA_NO_RESET_PROMPT_PER_TASK"
 echo "[INFO] dapc enabled=$TTA_USE_DAPC | weight=$TTA_DAPC_LOSS_WEIGHT | entropy_weight=$TTA_ENTROPY_LOSS_WEIGHT | tau_anchor=$TTA_DAPC_TAU_ANCHOR | beta=$TTA_DAPC_BETA"
@@ -260,6 +262,7 @@ variant_enabled() {
 
 build_variant_args() {
     local variant="$1"
+    local n_steps
     local alpha="$TTA_ALPHA"
     local gamma="$TTA_GAMMA"
     local ema_alpha="$TTA_EMA_ALPHA"
@@ -270,6 +273,14 @@ build_variant_args() {
     local tau_task="$TTA_TAU_TASK"
     local use_dapc="$TTA_USE_DAPC"
     local no_teacher="$TTA_NO_TEACHER"
+
+    if [ -n "$TTA_N_STEPS" ]; then
+        n_steps="$TTA_N_STEPS"
+    elif [ "$variant" = "tcp" ]; then
+        n_steps="$TTA_TCP_N_STEPS"
+    else
+        n_steps="$TTA_NAIVE_N_STEPS"
+    fi
 
     if [ "$variant" = "naive" ]; then
         alpha="${TTA_NAIVE_ALPHA:-$alpha}"
@@ -292,7 +303,7 @@ build_variant_args() {
     --alpha             "$alpha"
     --l2_anchor_beta    "$TTA_L2_ANCHOR_BETA"
     --lr                "$TTA_LR"
-    --n_steps           "$TTA_N_STEPS"
+    --n_steps           "$n_steps"
     --tta_param_scope   "$TTA_PARAM_SCOPE"
     --entropy_threshold "$TTA_ENTROPY_THRESHOLD"
     --gamma             "$gamma"

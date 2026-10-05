@@ -8,12 +8,10 @@
 
 set -euo pipefail
 
-PROJECT_ROOT="${PROJECT_ROOT:-/mmlab_students/storageStudents/nguyenvd/Thanhld/WSI/MergeSlide_TTA}"
-USER_NAME="${USER:-thanhld}"
-PROJECT_NAME="$(basename "$PROJECT_ROOT")"
-export MERGESLIDE_LOCAL_ROOT="${MERGESLIDE_LOCAL_ROOT:-/docker/data/$USER_NAME/$PROJECT_NAME}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/runtime_paths.sh"
 
-SETTING="${SETTING:-ind}"
+SETTING="${SETTING:-ood}"
 ORDER="${ORDER:-forward}"
 MODE="${MODE:-tcp}"
 TTA_PARAM_FILE="${TTA_PARAM_FILE:-}"
@@ -35,8 +33,8 @@ esac
 case "${SETTING}_${ORDER}" in
     ood_forward)
         CONFIG="${CONFIG:-configs/default_ood_eval_num_workers0.yaml}"
-        SAVE_DIR="${SAVE_DIR:-./checkpoints_ood/finetuned}"
-        MERGE_MODEL_PATH="${MERGE_MODEL_PATH:-./checkpoints_ood/merged}"
+        SAVE_DIR="${SAVE_DIR:-$MERGESLIDE_CHECKPOINT_ROOT/finetuned}"
+        MERGE_MODEL_PATH="${MERGE_MODEL_PATH:-$MERGESLIDE_CHECKPOINT_ROOT/merged}"
         SETTING_LABEL="ood"
         ;;
     ind_forward)
@@ -60,15 +58,6 @@ case "${SETTING}_${ORDER}" in
         exit 1
         ;;
 esac
-
-if [ -z "${PYTHON_BIN:-}" ]; then
-    DEFAULT_PYTHON="/mmlab_students/storageStudents/nguyenvd/anaconda3/envs/mergePre/bin/python3.10"
-    if [ -x "$DEFAULT_PYTHON" ]; then
-        PYTHON_BIN="$DEFAULT_PYTHON"
-    else
-        PYTHON_BIN="python"
-    fi
-fi
 
 cd "$PROJECT_ROOT"
 

@@ -18,10 +18,8 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-PROJECT_ROOT="${PROJECT_ROOT:-/mmlab_students/storageStudents/nguyenvd/Thanhld/WSI/MergeSlide_TTA}"
-USER_NAME="${USER:-thanhld}"
-PROJECT_NAME="$(basename "$PROJECT_ROOT")"
-export MERGESLIDE_LOCAL_ROOT="${MERGESLIDE_LOCAL_ROOT:-/docker/data/$USER_NAME/$PROJECT_NAME}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/runtime_paths.sh"
 LOG_DIR="${LOG_DIR:-logs}"
 
 # PT-first wrapper -- fixes NFS HDF5 hang
@@ -32,21 +30,12 @@ MERGE_ENTRYPOINT="${MERGE_ENTRYPOINT:-merge.py}"
 CONFIG="${CONFIG:-configs/default_ood_eval_num_workers0.yaml}"
 
 # checkpoints_ood: same level as checkpoints, not nested
-FINETUNED_DIR="${FINETUNED_DIR:-$MERGESLIDE_LOCAL_ROOT/checkpoints_ood/finetuned}"
-MERGED_DIR="${MERGED_DIR:-$MERGESLIDE_LOCAL_ROOT/checkpoints_ood/merged}"
+FINETUNED_DIR="${FINETUNED_DIR:-$MERGESLIDE_CHECKPOINT_ROOT/finetuned}"
+MERGED_DIR="${MERGED_DIR:-$MERGESLIDE_CHECKPOINT_ROOT/merged}"
 
 # ---------------------------------------------------------------------------
 # Python binary
 # ---------------------------------------------------------------------------
-if [ -z "${PYTHON_BIN:-}" ]; then
-    DEFAULT_PYTHON="/mmlab_students/storageStudents/nguyenvd/anaconda3/envs/mergePre/bin/python3.10"
-    if [ -x "$DEFAULT_PYTHON" ]; then
-        PYTHON_BIN="$DEFAULT_PYTHON"
-    else
-        PYTHON_BIN="python"
-    fi
-fi
-
 cd "$PROJECT_ROOT"
 
 # ---------------------------------------------------------------------------

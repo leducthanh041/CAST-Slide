@@ -1,0 +1,74 @@
+runtime:
+  fold: 5
+  mode: "naive"
+  k_patches: 400
+  coverage_repeats: 3
+  spatial_bins: 8
+  seed: 0
+  feature_dir: "${MERGESLIDE_DATA_ROOT}/TCGA-BRCA_processed/features/h5_files"
+  finetuned_dir: "checkpoints_ood/finetuned"
+  merged_dir: "checkpoints_ood/merged"
+  task_prompts: "task_prompts.pt"
+  output_dir: "logs/heatmaps/cast_slide_ood_fold5_figure5_reference_naive_student"
+  clam_root: "../CLAM"
+
+tta:
+  M: 8
+  K_sub: 300
+  n_steps: 5
+  tta_param_scope: "ln_only"
+  top_ratio: 0.25
+  alpha: 0.1
+  l2_anchor_beta: 0.5
+  lr: 0.0002
+  entropy_threshold: 0.2
+  gamma: 0.0
+  select_mode: "intersection"
+  use_teacher: true
+  tcp_inference_model: "teacher"
+  naive_inference_model: "student"
+  naive_use_task_entropy: true
+  adapt_task_prompts: false
+  use_dapc: true
+  ema_alpha: 0.999
+  ema_alpha_prompt: 0.995
+  delta_margin: 0.1
+  tp_anchor_beta: 0.1
+  gamma_margin: 0.01
+  tau_task: 0.5
+  dapc_loss_weight: 0.25
+  entropy_loss_weight: 1.0
+  dapc_tau_anchor: 0.5
+  dapc_beta: 1.2
+
+visualization:
+  vis_patch_size: 1024
+  thumbnail_size: 2048
+  heatmap_alpha: 0.4
+  heatmap_vis_level: 1
+  jpeg_quality: 100
+  draw_attention_boundary: false
+  save_supporting_images: false
+  boundary_threshold: 70.0
+  boundary_line_width: 14
+  boundary_mask_max_size: 2048
+  boundary_min_area_patches: 2.0
+  boundary_max_contours: 1
+  seg_sthresh: 15
+  seg_mthresh: 11
+  seg_close: 2
+  seg_use_otsu: false
+  filter_area_tissue: 50.0
+  filter_area_hole: 8.0
+  filter_max_holes: 10
+  mask_line_thickness: 250
+
+slides:
+  - slide_id: "TCGA-A2-A0CP-01Z-00-DX1.ECFD263C-BB17-4ADA-8F2C-654C2AA4C45F"
+    label: "IDC"
+    split: "test"
+    wsi: "logs/heatmaps/input_slides/TCGA-A2-A0CP-01Z-00-DX1.ECFD263C-BB17-4ADA-8F2C-654C2AA4C45F.svs"
+  - slide_id: "TCGA-E9-A1N4-01Z-00-DX1.71c8d4a5-ec99-4012-9fe2-ddb3349ad5bc"
+    label: "ILC"
+    split: "test"
+    wsi: "logs/heatmaps/input_slides/TCGA-E9-A1N4-01Z-00-DX1.71c8d4a5-ec99-4012-9fe2-ddb3349ad5bc.svs"

@@ -2,7 +2,7 @@
 # Replace this with the local dataset root.
 
 dataset:
-  root: "/mmlab_students/storageStudents/nguyenvd/Thanhld/WSI/dataset"
+  root: "${oc.env:MERGESLIDE_DATA_ROOT,../dataset}"
   
   order: "reverse"
 

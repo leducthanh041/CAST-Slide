@@ -1,0 +1,117 @@
+runtime:
+  fold: 4
+  mode: "naive"
+  k_patches: 400
+  coverage_repeats: 1
+  max_bags: 0
+  spatial_bins: 8
+  seed: 0
+  dataset_config: "configs/default_ood_eval_num_workers0.yaml"
+  finetuned_dir: "checkpoints_ood/finetuned"
+  merged_dir: "checkpoints_ood/merged"
+  task_prompts: "task_prompts.pt"
+  output_dir: "logs/attention_maps/fold4_head4_last_layer"
+  fixed_selection_manifest: ""
+  figure_filename: "region_level_attention_maps_6tasks_fold4_naive_head4_last_layer.jpg"
+  online_causal: true
+  reset_before_slide: false
+  save_pre_wsi_attention: true
+  clam_root: "../CLAM"
+  attention_backend: "selected_transformer_head"
+  run_scope: "cesc_only"
+  grid_orientation: "stages_horizontal"
+  selected_layer_index: 5
+  selected_head_index: 4
+
+raw_roots:
+  - "${MERGESLIDE_RAW_ROOT_PRIMARY}"
+  - "${MERGESLIDE_RAW_ROOT_AUXILIARY}"
+
+selection:
+  selection_split: "train"
+  min_patches: 400
+  max_patches: 8000
+  preferred_patches: 1600
+  max_candidates_per_task: 120
+  selection_pool_size: 1
+  attention_top_fraction: 0.05
+  qc_thumbnail_size: 1024
+  min_largest_component_fraction: 0.0
+  max_second_component_fraction: 1.0
+  specimen_crop_margin: 0.08
+  rank_cesc_candidates: true
+  reuse_cesc_ranking: true
+  cesc_ranking_choice: 2
+  cesc_candidate_splits: ["test", "val", "train"]
+  cesc_max_candidates: 8
+  cesc_candidate_max_patches: 3000
+  cesc_min_largest_fraction: 0.85
+  cesc_max_second_fraction: 0.10
+  cesc_exclude_slides:
+    - "TCGA-DS-A0VK-01A-02-MSB.2bdf09f2-14c9-4b13-9dd1-4038675bebc3"
+  # The first five WSIs are fixed. The listed CESC is only a validated
+  # placeholder and is replaced by Head #4 consistency ranking before run.
+  slide_overrides:
+    BRCA: "TCGA-AR-A0TZ-01Z-00-DX1.2D58BE38-03F6-4310-8E06-F1A523FB0904"
+    RCC: "TCGA-J7-8537-01Z-00-DX2.94202120-69A5-4223-9F53-5504FC9C6232"
+    NSCLC: "TCGA-22-1016-01Z-00-DX1.807510FD-222D-4E65-B261-3EB0815F8A50"
+    ESCA: "TCGA-2H-A9GN-01A-01-TS1.25CAC379-651D-4628-890E-713099EBD5D7"
+    TGCT: "TCGA-XE-AANR-01A-01-TSA.44524A5F-97BD-4926-B97B-20ACA8B904C4"
+    CESC: "TCGA-DS-A0VK-01A-02-MSB.2bdf09f2-14c9-4b13-9dd1-4038675bebc3"
+
+tta:
+  episodic: false
+  M: 8
+  K_sub: 300
+  n_steps: 5
+  tta_param_scope: "ln_only"
+  top_ratio: 0.25
+  alpha: 0.1
+  l2_anchor_beta: 0.5
+  lr: 0.0002
+  entropy_threshold: 0.2
+  gamma: 0.0
+  select_mode: "intersection"
+  use_teacher: true
+  tcp_inference_model: "teacher"
+  naive_inference_model: "student"
+  naive_use_task_entropy: true
+  adapt_task_prompts: false
+  use_dapc: true
+  ema_alpha: 0.999
+  ema_alpha_prompt: 0.995
+  delta_margin: 0.1
+  tp_anchor_beta: 0.1
+  gamma_margin: 0.01
+  tau_task: 0.5
+  dapc_loss_weight: 0.25
+  entropy_loss_weight: 1.0
+  dapc_tau_anchor: 0.5
+  dapc_beta: 1.2
+
+visualization:
+  vis_patch_size: 1024
+  original_thumbnail_size: 2048
+  thumbnail_size: 2048
+  panel_width: 2048
+  panel_height: 2048
+  heatmap_alpha: 0.50
+  attention_colormap: "jet"
+  heatmap_vis_level: 2
+  rerender_max_dimension: 4096
+  jpeg_quality: 95
+  draw_attention_boundary: false
+  save_supporting_images: false
+  boundary_threshold: 70.0
+  boundary_line_width: 14
+  boundary_mask_max_size: 2048
+  boundary_min_area_patches: 2.0
+  boundary_max_contours: 1
+  seg_sthresh: 15
+  seg_mthresh: 11
+  seg_close: 2
+  seg_use_otsu: false
+  filter_area_tissue: 50.0
+  filter_area_hole: 8.0
+  filter_max_holes: 10
+  mask_line_thickness: 250

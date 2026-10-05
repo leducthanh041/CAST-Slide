@@ -1,0 +1,28 @@
+# Install a CUDA-compatible PyTorch build first:
+# https://pytorch.org/get-started/locally/
+#
+# Example:
+#   pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+
+# Core numerical/data stack
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+scikit-learn>=1.3
+h5py>=3.8
+tqdm>=4.65
+omegaconf>=2.3
+PyYAML>=6.0
+
+# Model/runtime stack
+torch>=2.1
+torchvision>=0.16
+transformers>=4.40
+huggingface-hub>=0.23
+safetensors>=0.4
+einops>=0.7
+
+# Visualization and experiment utilities
+matplotlib>=3.7
+seaborn>=0.12
+tensorboard>=2.14

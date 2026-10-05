@@ -1,8 +1,8 @@
 # configs/default.yaml
-# Replace this with the local dataset root.
+# Override with MERGESLIDE_DATA_ROOT when the dataset is stored elsewhere.
 
 dataset:
-  root: "/mmlab_students/storageStudents/nguyenvd/Thanhld/WSI/dataset"
+  root: "${oc.env:MERGESLIDE_DATA_ROOT,../dataset}"
   
   order: "forward"
 

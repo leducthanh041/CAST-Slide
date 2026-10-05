@@ -1,0 +1,583 @@
+[
+  {
+    "task_id": 0,
+    "task_name": "BRCA",
+    "slide_id": "TCGA-AR-A0TZ-01Z-00-DX1.2D58BE38-03F6-4310-8E06-F1A523FB0904",
+    "local_label": 0,
+    "true_global_class": 0,
+    "split": "train",
+    "fold": 4,
+    "raw_wsi": "/datastore/uittogether/LuuTru/Thuchd/Research/data_raw_BRCA_LUSC_RCC/TCGA-AR-A0TZ-01Z-00-DX1.2D58BE38-03F6-4310-8E06-F1A523FB0904.svs",
+    "raw_match": "exact_slide_id",
+    "feature_h5": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/../dataset/TCGA-BRCA_processed/features/h5_files/TCGA-AR-A0TZ-01Z-00-DX1.2D58BE38-03F6-4310-8E06-F1A523FB0904.h5",
+    "num_patches": 1592,
+    "qc_thumbnail": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/logs/attention_maps/fold4_head10_last_layer_supplementary/selection_qc_online_causal/1_BRCA_TCGA-AR-A0TZ-01Z-00-DX1.2D58BE38-03F6-4310-8E06-F1A523FB0904.jpg",
+    "qc": {
+      "significant_components": 1,
+      "largest_tissue_fraction": 1.0,
+      "second_tissue_fraction": 0.0,
+      "dominant_tissue_width": 615,
+      "dominant_tissue_height": 976,
+      "dominant_tissue_x": 50,
+      "dominant_tissue_y": 18,
+      "dominant_tissue_aspect_ratio": 0.6301229508196722,
+      "thumbnail_width": 705,
+      "thumbnail_height": 1024,
+      "slide_width": 45696,
+      "slide_height": 66354,
+      "tissue_component_boxes": [
+        {
+          "x": 50,
+          "y": 18,
+          "width": 615,
+          "height": 976,
+          "area": 378703
+        }
+      ],
+      "feature_coord_min": [
+        3264,
+        1184
+      ],
+      "feature_coord_max": [
+        42176,
+        63648
+      ],
+      "coordinates_fit_raw_wsi": true
+    },
+    "selection_prediction": {
+      "selection_requires_correct_prediction": false,
+      "selection_method": "explicit_online_causal_override"
+    },
+    "selection_rejections": {},
+    "specimen_crop_margin": 0.08,
+    "full_wsi_attention_consistency": {
+      "selection_score": 0.4783368120915268,
+      "mean_focus": 0.09236357486654194,
+      "mean_top_attention_mass": 0.3315868931138692,
+      "mean_spatial_compactness": 0.23367845844118496,
+      "mean_stage_rank_correlation": 0.9681924877916664,
+      "mean_top_region_jaccard": 0.7045492504458897,
+      "per_stage": [
+        {
+          "focus": 0.10417595876372765,
+          "top_attention_mass": 0.36508457200804595,
+          "spatial_compactness": 0.25107851596203623
+        },
+        {
+          "focus": 0.08474175016612895,
+          "top_attention_mass": 0.3156586627877222,
+          "spatial_compactness": 0.2269197584124245
+        },
+        {
+          "focus": 0.06992099041442057,
+          "top_attention_mass": 0.27920792588246257,
+          "spatial_compactness": 0.26445211389128565
+        },
+        {
+          "focus": 0.10933236177345995,
+          "top_attention_mass": 0.3664682393752705,
+          "spatial_compactness": 0.22433132010353762
+        },
+        {
+          "focus": 0.09871504210359638,
+          "top_attention_mass": 0.34383247916653936,
+          "spatial_compactness": 0.22433132010353762
+        },
+        {
+          "focus": 0.0872953459779181,
+          "top_attention_mass": 0.3192694794631746,
+          "spatial_compactness": 0.2109577221742882
+        }
+      ]
+    }
+  },
+  {
+    "task_id": 1,
+    "task_name": "RCC",
+    "slide_id": "TCGA-J7-8537-01Z-00-DX2.94202120-69A5-4223-9F53-5504FC9C6232",
+    "local_label": 1,
+    "true_global_class": 3,
+    "split": "train",
+    "fold": 4,
+    "raw_wsi": "/datastore/uittogether/LuuTru/Thuchd/Research/data_raw_BRCA_LUSC_RCC/TCGA-J7-8537-01Z-00-DX2.94202120-69A5-4223-9F53-5504FC9C6232.svs",
+    "raw_match": "exact_slide_id",
+    "feature_h5": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/../dataset/TCGA-RCC_processed/features/h5_files/TCGA-J7-8537-01Z-00-DX2.94202120-69A5-4223-9F53-5504FC9C6232.h5",
+    "num_patches": 1600,
+    "qc_thumbnail": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/logs/attention_maps/fold4_head10_last_layer_supplementary/selection_qc_online_causal/2_RCC_TCGA-J7-8537-01Z-00-DX2.94202120-69A5-4223-9F53-5504FC9C6232.jpg",
+    "qc": {
+      "significant_components": 2,
+      "largest_tissue_fraction": 0.993644047993669,
+      "second_tissue_fraction": 0.006355952006331027,
+      "dominant_tissue_width": 525,
+      "dominant_tissue_height": 929,
+      "dominant_tissue_x": 107,
+      "dominant_tissue_y": 48,
+      "dominant_tissue_aspect_ratio": 0.5651237890204521,
+      "thumbnail_width": 771,
+      "thumbnail_height": 1024,
+      "slide_width": 53624,
+      "slide_height": 71253,
+      "tissue_component_boxes": [
+        {
+          "x": 107,
+          "y": 48,
+          "width": 525,
+          "height": 929,
+          "area": 318919
+        },
+        {
+          "x": 331,
+          "y": 1009,
+          "width": 167,
+          "height": 15,
+          "area": 2040
+        }
+      ],
+      "feature_coord_min": [
+        0,
+        3360
+      ],
+      "feature_coord_max": [
+        53248,
+        70932
+      ],
+      "coordinates_fit_raw_wsi": true
+    },
+    "selection_prediction": {
+      "selection_requires_correct_prediction": false,
+      "selection_method": "explicit_online_causal_override"
+    },
+    "selection_rejections": {},
+    "specimen_crop_margin": 0.08,
+    "full_wsi_attention_consistency": {
+      "selection_score": 0.6566113778838134,
+      "mean_focus": 0.25298203324119467,
+      "mean_top_attention_mass": 0.6206127930903823,
+      "mean_spatial_compactness": 0.5422166972513268,
+      "mean_stage_rank_correlation": 0.9885771773738976,
+      "mean_top_region_jaccard": 0.8586448719163218,
+      "per_stage": [
+        {
+          "focus": 0.23400630339644957,
+          "top_attention_mass": 0.5878166374282866,
+          "spatial_compactness": 0.5337167420278768
+        },
+        {
+          "focus": 0.24019233435108522,
+          "top_attention_mass": 0.5983844605390818,
+          "spatial_compactness": 0.5337167420278768
+        },
+        {
+          "focus": 0.24489916962535452,
+          "top_attention_mass": 0.6125452465267598,
+          "spatial_compactness": 0.585882181513508
+        },
+        {
+          "focus": 0.2625673840271089,
+          "top_attention_mass": 0.6383952561697858,
+          "spatial_compactness": 0.5605280293612738
+        },
+        {
+          "focus": 0.2773748126380017,
+          "top_attention_mass": 0.6592270353160283,
+          "spatial_compactness": 0.5243910768684343
+        },
+        {
+          "focus": 0.25885219540916804,
+          "top_attention_mass": 0.6273081225623511,
+          "spatial_compactness": 0.5150654117089919
+        }
+      ]
+    }
+  },
+  {
+    "task_id": 2,
+    "task_name": "NSCLC",
+    "slide_id": "TCGA-22-1016-01Z-00-DX1.807510FD-222D-4E65-B261-3EB0815F8A50",
+    "local_label": 1,
+    "true_global_class": 6,
+    "split": "train",
+    "fold": 4,
+    "raw_wsi": "/datastore/uittogether/LuuTru/Thuchd/Research/data_raw_BRCA_LUSC_RCC/TCGA-22-1016-01Z-00-DX1.807510FD-222D-4E65-B261-3EB0815F8A50.svs",
+    "raw_match": "exact_slide_id",
+    "feature_h5": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/../dataset/TCGA-NSCLC_processed/features/h5_files/TCGA-22-1016-01Z-00-DX1.807510FD-222D-4E65-B261-3EB0815F8A50.h5",
+    "num_patches": 1605,
+    "qc_thumbnail": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/logs/attention_maps/fold4_head10_last_layer_supplementary/selection_qc_online_causal/3_NSCLC_TCGA-22-1016-01Z-00-DX1.807510FD-222D-4E65-B261-3EB0815F8A50.jpg",
+    "qc": {
+      "significant_components": 1,
+      "largest_tissue_fraction": 1.0,
+      "second_tissue_fraction": 0.0,
+      "dominant_tissue_width": 946,
+      "dominant_tissue_height": 491,
+      "dominant_tissue_x": 29,
+      "dominant_tissue_y": 51,
+      "dominant_tissue_aspect_ratio": 1.9266802443991853,
+      "thumbnail_width": 1024,
+      "thumbnail_height": 561,
+      "slide_width": 73704,
+      "slide_height": 40406,
+      "tissue_component_boxes": [
+        {
+          "x": 29,
+          "y": 51,
+          "width": 946,
+          "height": 491,
+          "area": 315033
+        }
+      ],
+      "feature_coord_min": [
+        2112,
+        3649
+      ],
+      "feature_coord_max": [
+        69696,
+        38465
+      ],
+      "coordinates_fit_raw_wsi": true
+    },
+    "selection_prediction": {
+      "selection_requires_correct_prediction": false,
+      "selection_method": "explicit_online_causal_override"
+    },
+    "selection_rejections": {},
+    "specimen_crop_margin": 0.08,
+    "full_wsi_attention_consistency": {
+      "selection_score": 0.4388951614898483,
+      "mean_focus": 0.0952957858271294,
+      "mean_top_attention_mass": 0.3052226951938101,
+      "mean_spatial_compactness": 0.04649435531788474,
+      "mean_stage_rank_correlation": 0.9866845496679503,
+      "mean_top_region_jaccard": 0.7606229500492396,
+      "per_stage": [
+        {
+          "focus": 0.08630692534588469,
+          "top_attention_mass": 0.2839803528486465,
+          "spatial_compactness": 0.05882352941176472
+        },
+        {
+          "focus": 0.08563118693468597,
+          "top_attention_mass": 0.2805899833266712,
+          "spatial_compactness": 0.07308377896613194
+        },
+        {
+          "focus": 0.09582350347776858,
+          "top_attention_mass": 0.30636528097413057,
+          "spatial_compactness": 0.05882352941176472
+        },
+        {
+          "focus": 0.10401775203597174,
+          "top_attention_mass": 0.3258401612080686,
+          "spatial_compactness": 0.02941176470588236
+        },
+        {
+          "focus": 0.10307422957318202,
+          "top_attention_mass": 0.32445181613920127,
+          "spatial_compactness": 0.02941176470588236
+        },
+        {
+          "focus": 0.09692111759528343,
+          "top_attention_mass": 0.31010857666614233,
+          "spatial_compactness": 0.02941176470588236
+        }
+      ]
+    }
+  },
+  {
+    "task_id": 3,
+    "task_name": "ESCA",
+    "slide_id": "TCGA-2H-A9GN-01A-01-TS1.25CAC379-651D-4628-890E-713099EBD5D7",
+    "local_label": 0,
+    "true_global_class": 7,
+    "split": "val",
+    "fold": 4,
+    "raw_wsi": "/datastore/uittogether/LuuTru/Thuchd/Research/data_raw_CESC_ESCA_TGCT/TCGA-2H-A9GN-01A-01-TS1.25CAC379-651D-4628-890E-713099EBD5D7.svs",
+    "raw_match": "exact_slide_id",
+    "feature_h5": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/../dataset/TCGA-ESCA_processed/features/h5_files/TCGA-2H-A9GN-01A-01-TS1.25CAC379-651D-4628-890E-713099EBD5D7.h5",
+    "num_patches": 498,
+    "qc_thumbnail": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/logs/attention_maps/fold4_head10_last_layer_supplementary/selection_qc_online_causal/4_ESCA_TCGA-2H-A9GN-01A-01-TS1.25CAC379-651D-4628-890E-713099EBD5D7.jpg",
+    "qc": {
+      "significant_components": 2,
+      "largest_tissue_fraction": 0.9960355535516436,
+      "second_tissue_fraction": 0.003964446448356349,
+      "dominant_tissue_width": 895,
+      "dominant_tissue_height": 596,
+      "dominant_tissue_x": 104,
+      "dominant_tissue_y": 55,
+      "dominant_tissue_aspect_ratio": 1.5016778523489933,
+      "thumbnail_width": 1024,
+      "thumbnail_height": 755,
+      "slide_width": 37847,
+      "slide_height": 27918,
+      "tissue_component_boxes": [
+        {
+          "x": 104,
+          "y": 55,
+          "width": 895,
+          "height": 596,
+          "area": 362291
+        },
+        {
+          "x": 72,
+          "y": 31,
+          "width": 58,
+          "height": 62,
+          "area": 1442
+        }
+      ],
+      "feature_coord_min": [
+        3728,
+        1904
+      ],
+      "feature_coord_max": [
+        36496,
+        23408
+      ],
+      "coordinates_fit_raw_wsi": true
+    },
+    "selection_prediction": {
+      "selection_requires_correct_prediction": false,
+      "selection_method": "explicit_online_causal_override"
+    },
+    "selection_rejections": {},
+    "specimen_crop_margin": 0.08,
+    "full_wsi_attention_consistency": {
+      "selection_score": 0.6730387771665594,
+      "mean_focus": 0.388474788806823,
+      "mean_top_attention_mass": 0.7748494345633284,
+      "mean_spatial_compactness": 0.4161706349206349,
+      "mean_stage_rank_correlation": 0.9922478590304654,
+      "mean_top_region_jaccard": 0.8402850874115243,
+      "per_stage": [
+        {
+          "focus": 0.37508081864374665,
+          "top_attention_mass": 0.7548008011327262,
+          "spatial_compactness": 0.4107142857142857
+        },
+        {
+          "focus": 0.38709411626898105,
+          "top_attention_mass": 0.7783713363900413,
+          "spatial_compactness": 0.4107142857142857
+        },
+        {
+          "focus": 0.3763842489457748,
+          "top_attention_mass": 0.7550054936625498,
+          "spatial_compactness": 0.4107142857142857
+        },
+        {
+          "focus": 0.38662383494830466,
+          "top_attention_mass": 0.7713215638170258,
+          "spatial_compactness": 0.44345238095238093
+        },
+        {
+          "focus": 0.4089165651544713,
+          "top_attention_mass": 0.8017096912173357,
+          "spatial_compactness": 0.4107142857142857
+        },
+        {
+          "focus": 0.39674914887965973,
+          "top_attention_mass": 0.7878877211602917,
+          "spatial_compactness": 0.4107142857142857
+        }
+      ]
+    }
+  },
+  {
+    "task_id": 4,
+    "task_name": "TGCT",
+    "slide_id": "TCGA-XE-AANR-01A-01-TSA.44524A5F-97BD-4926-B97B-20ACA8B904C4",
+    "local_label": 0,
+    "true_global_class": 9,
+    "split": "train",
+    "fold": 4,
+    "raw_wsi": "/datastore/uittogether/LuuTru/Thuchd/Research/data_raw_CESC_ESCA_TGCT/TCGA-XE-AANR-01A-01-TSA.41A21599-F850-402B-BFD3-A530D5CEA514.svs",
+    "raw_match": "tcga_barcode_fallback",
+    "feature_h5": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/../dataset/TCGA-TGCT_processed/features/h5_files/TCGA-XE-AANR-01A-01-TSA.44524A5F-97BD-4926-B97B-20ACA8B904C4.h5",
+    "num_patches": 1194,
+    "qc_thumbnail": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/logs/attention_maps/fold4_head10_last_layer_supplementary/selection_qc_online_causal/5_TGCT_TCGA-XE-AANR-01A-01-TSA.44524A5F-97BD-4926-B97B-20ACA8B904C4.jpg",
+    "qc": {
+      "significant_components": 2,
+      "largest_tissue_fraction": 0.5029832230623819,
+      "second_tissue_fraction": 0.49701677693761814,
+      "dominant_tissue_width": 340,
+      "dominant_tissue_height": 217,
+      "dominant_tissue_x": 27,
+      "dominant_tissue_y": 27,
+      "dominant_tissue_aspect_ratio": 1.566820276497696,
+      "thumbnail_width": 1024,
+      "thumbnail_height": 268,
+      "slide_width": 113543,
+      "slide_height": 29731,
+      "tissue_component_boxes": [
+        {
+          "x": 27,
+          "y": 27,
+          "width": 340,
+          "height": 217,
+          "area": 51087
+        },
+        {
+          "x": 671,
+          "y": 13,
+          "width": 328,
+          "height": 223,
+          "area": 50481
+        }
+      ],
+      "feature_coord_min": [
+        2816,
+        1504
+      ],
+      "feature_coord_max": [
+        110212,
+        26528
+      ],
+      "coordinates_fit_raw_wsi": true
+    },
+    "selection_prediction": {
+      "selection_requires_correct_prediction": false,
+      "selection_method": "explicit_online_causal_override"
+    },
+    "selection_rejections": {},
+    "specimen_crop_margin": 0.08,
+    "full_wsi_attention_consistency": {
+      "selection_score": 0.574774166751199,
+      "mean_focus": 0.22250643241093862,
+      "mean_top_attention_mass": 0.5490773140947588,
+      "mean_spatial_compactness": 0.3203172476986558,
+      "mean_stage_rank_correlation": 0.9850580147896011,
+      "mean_top_region_jaccard": 0.7979981292095558,
+      "per_stage": [
+        {
+          "focus": 0.21954673065362773,
+          "top_attention_mass": 0.557717621425235,
+          "spatial_compactness": 0.3072170504761925
+        },
+        {
+          "focus": 0.22115013087733448,
+          "top_attention_mass": 0.542159924844773,
+          "spatial_compactness": 0.3486986375161114
+        },
+        {
+          "focus": 0.20574815416376013,
+          "top_attention_mass": 0.5192801309133979,
+          "spatial_compactness": 0.3486986375161114
+        },
+        {
+          "focus": 0.2186966516315979,
+          "top_attention_mass": 0.5416320355037407,
+          "spatial_compactness": 0.3486986375161114
+        },
+        {
+          "focus": 0.23673904367257925,
+          "top_attention_mass": 0.569344382033364,
+          "spatial_compactness": 0.34111468715014026
+        },
+        {
+          "focus": 0.23315788346673216,
+          "top_attention_mass": 0.5643297898480419,
+          "spatial_compactness": 0.22747583601726773
+        }
+      ]
+    }
+  },
+  {
+    "task_id": 5,
+    "task_name": "CESC",
+    "slide_id": "TCGA-C5-A1BJ-01A-01-TSA.f24c19a0-b8af-44e5-a88f-a5b8e55aa55b",
+    "local_label": 1,
+    "true_global_class": 12,
+    "split": "test",
+    "fold": 4,
+    "raw_wsi": "/datastore/uittogether/LuuTru/Thuchd/Research/data_raw_CESC_ESCA_TGCT/TCGA-C5-A1BJ-01A-01-TSA.f24c19a0-b8af-44e5-a88f-a5b8e55aa55b.svs",
+    "raw_match": "exact_slide_id",
+    "feature_h5": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/../dataset/TCGA-CESC_processed/features/h5_files/TCGA-C5-A1BJ-01A-01-TSA.f24c19a0-b8af-44e5-a88f-a5b8e55aa55b.h5",
+    "num_patches": 407,
+    "qc_thumbnail": "/datastore/uittogether3/LuuTru/Thanhld/WSI/MergeSlide_TTA/logs/attention_maps/fold4_head10_last_layer_supplementary/selection_qc_online_causal/6_CESC_TCGA-C5-A1BJ-01A-01-TSA.f24c19a0-b8af-44e5-a88f-a5b8e55aa55b.jpg",
+    "qc": {
+      "significant_components": 2,
+      "largest_tissue_fraction": 0.532679029957204,
+      "second_tissue_fraction": 0.467320970042796,
+      "dominant_tissue_width": 254,
+      "dominant_tissue_height": 336,
+      "dominant_tissue_x": 33,
+      "dominant_tissue_y": 47,
+      "dominant_tissue_aspect_ratio": 0.7559523809523809,
+      "thumbnail_width": 1024,
+      "thumbnail_height": 442,
+      "slide_width": 67591,
+      "slide_height": 29212,
+      "tissue_component_boxes": [
+        {
+          "x": 706,
+          "y": 18,
+          "width": 262,
+          "height": 337,
+          "area": 46676
+        },
+        {
+          "x": 33,
+          "y": 47,
+          "width": 254,
+          "height": 336,
+          "area": 40949
+        }
+      ],
+      "feature_coord_min": [
+        2144,
+        1281
+      ],
+      "feature_coord_max": [
+        62980,
+        24643
+      ],
+      "coordinates_fit_raw_wsi": true
+    },
+    "selection_prediction": {
+      "selection_requires_correct_prediction": false,
+      "selection_method": "explicit_online_causal_override"
+    },
+    "selection_rejections": {},
+    "specimen_crop_margin": 0.08,
+    "visualized_specimen": "left_component",
+    "full_wsi_attention_consistency": {
+      "selection_score": 0.5050561787710033,
+      "mean_focus": 0.14099266305439243,
+      "mean_top_attention_mass": 0.36937672538223204,
+      "mean_spatial_compactness": 0.3175320039775598,
+      "mean_stage_rank_correlation": 0.9795032882253978,
+      "mean_top_region_jaccard": 0.6308681688681688,
+      "per_stage": [
+        {
+          "focus": 0.14219998182789095,
+          "top_attention_mass": 0.36417165052839073,
+          "spatial_compactness": 0.29070712701712986
+        },
+        {
+          "focus": 0.14502875466384058,
+          "top_attention_mass": 0.37752190521004503,
+          "spatial_compactness": 0.30502763005983324
+        },
+        {
+          "focus": 0.13258894062784787,
+          "top_attention_mass": 0.3513231892866291,
+          "spatial_compactness": 0.30502763005983324
+        },
+        {
+          "focus": 0.1430688206023325,
+          "top_attention_mass": 0.37449222520655745,
+          "spatial_compactness": 0.30502763005983324
+        },
+        {
+          "focus": 0.13929213951918318,
+          "top_attention_mass": 0.36996225369777286,
+          "spatial_compactness": 0.3867890853469116
+        },
+        {
+          "focus": 0.1437773410852594,
+          "top_attention_mass": 0.37878912836399714,
+          "spatial_compactness": 0.31261292132181795
+        }
+      ]
+    }
+  }
+]
