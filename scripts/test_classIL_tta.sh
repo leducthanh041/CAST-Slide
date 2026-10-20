@@ -132,6 +132,9 @@ TTA_VERBOSE_LOSS="${TTA_VERBOSE_LOSS:-1}"
 TTA_DIAG_DIR="${TTA_DIAG_DIR:-}"
 TTA_RESULT_CSV="${TTA_RESULT_CSV:-}"
 TTA_EFFICIENCY_JSON="${TTA_EFFICIENCY_JSON:-}"
+TTA_DECISION_OUTPUT_DIR="${TTA_DECISION_OUTPUT_DIR:-}"
+FOLD_START="${FOLD_START:-0}"
+FOLD_END="${FOLD_END:--1}"
 
 # Python runtime
 if [ -z "${PYTHON_BIN:-}" ]; then
@@ -358,6 +361,10 @@ build_variant_args() {
             echo "[WARN] $TTA_ENTRYPOINT does not support --diag_dir; skipping TTA_DIAG_DIR=$TTA_DIAG_DIR" >&2
         fi
     fi
+    if [ -n "$TTA_DECISION_OUTPUT_DIR" ]; then
+        VARIANT_ARGS+=(--decision_output_dir "$TTA_DECISION_OUTPUT_DIR")
+    fi
+    VARIANT_ARGS+=(--fold_start "$FOLD_START" --fold_end "$FOLD_END")
 }
 result_csv_for() {
     local variant="$1"

@@ -57,9 +57,7 @@ def safe_ovr_auc(targets, probabilities, class_id):
 
 
 def get_local_hot_root() -> Path:
-    user = os.environ.get("USER") or "thanhld"
-    default_root = Path("/docker/data") / user / PROJECT_ROOT.name
-    return Path(os.environ.get("MERGESLIDE_LOCAL_ROOT", default_root)).expanduser()
+    return Path(os.environ.get("MERGESLIDE_LOCAL_ROOT", PROJECT_ROOT)).expanduser()
 
 
 def ensure_local_hot_storage() -> Path:

@@ -13,6 +13,7 @@ from scipy import stats
 import collections
 from itertools import islice
 import bisect
+from pathlib import Path
 from torch.utils.data import Dataset
 import h5py
 import torch.nn.functional as F
@@ -614,6 +615,7 @@ class Sequential_Generic_MIL_Dataset(ContinualDataset):
             self._init_hardcoded()
             self.batch_size  = 1
             self.num_workers = 4
+            order = "forward"
         
         self._order = order
         self.N_TASKS = len(self.datasets)
@@ -625,40 +627,46 @@ class Sequential_Generic_MIL_Dataset(ContinualDataset):
 
     def _init_from_config(self, cfg):
         d = cfg.dataset
+        project_root = Path(__file__).resolve().parents[1]
+
+        def project_path(value):
+            path = Path(str(value)).expanduser()
+            return str(path if path.is_absolute() else (project_root / path).resolve())
+
         self.datasets = [
             Generic_MIL_Dataset(
-                csv_path=d.brca.csv,
-                data_dir=d.brca.features,
+                csv_path=project_path(d.brca.csv),
+                data_dir=project_path(d.brca.features),
                 shuffle=False, seed=0, print_info=True,
                 label_dict=self._BRCA_LABEL_DICT,
                 patient_strat=False,
                 ignore=self._BRCA_IGNORE,
             ),
             Generic_MIL_Dataset(
-                csv_path=d.rcc.csv,
-                data_dir=d.rcc.features,
+                csv_path=project_path(d.rcc.csv),
+                data_dir=project_path(d.rcc.features),
                 shuffle=False, seed=0, print_info=True,
                 label_dict=self._RCC_LABEL_DICT,
                 patient_strat=False, ignore=[],
             ),
             Generic_MIL_Dataset(
-                csv_path=d.nsclc.csv,
-                data_dir=d.nsclc.features,
+                csv_path=project_path(d.nsclc.csv),
+                data_dir=project_path(d.nsclc.features),
                 shuffle=False, seed=0, print_info=True,
                 label_dict=self._NSCLC_LABEL_DICT,
                 patient_strat=False, ignore=[],
             ),
-            Generic_MIL_Dataset2(data_dir=d.esca.features, label_dict={0: 0, 1: 1}),
-            Generic_MIL_Dataset2(data_dir=d.tgct.features, label_dict={0: 0, 1: 1}),
-            Generic_MIL_Dataset2(data_dir=d.cesc.features, label_dict={0: 0, 1: 1}),
+            Generic_MIL_Dataset2(data_dir=project_path(d.esca.features), label_dict={0: 0, 1: 1}),
+            Generic_MIL_Dataset2(data_dir=project_path(d.tgct.features), label_dict={0: 0, 1: 1}),
+            Generic_MIL_Dataset2(data_dir=project_path(d.cesc.features), label_dict={0: 0, 1: 1}),
         ]
         self.split_dirs = [
-            d.brca.splits,
-            d.rcc.splits,
-            d.nsclc.splits,
-            d.esca.splits,
-            d.tgct.splits,
-            d.cesc.splits,
+            project_path(d.brca.splits),
+            project_path(d.rcc.splits),
+            project_path(d.nsclc.splits),
+            project_path(d.esca.splits),
+            project_path(d.tgct.splits),
+            project_path(d.cesc.splits),
         ]
 
     # ------------------------------------------------------------------
@@ -666,14 +674,13 @@ class Sequential_Generic_MIL_Dataset(ContinualDataset):
     # ------------------------------------------------------------------
 
     def _init_hardcoded(self):
-        ROOT = "/datastore/uittogether3/LuuTru/Thanhld/WSI/dataset"
-        ANN  = f"{ROOT}/wsi_dataset_annotation"
-        PRE  = "preprocessed/10x_256px_0px_overlap/features_conch_v15"
+        ROOT = str(Path(__file__).resolve().parents[2] / "dataset")
+        ANN = f"{ROOT}/wsi_dataset_annotation_cross_sites"
 
         self.datasets = [
             Generic_MIL_Dataset(
-                csv_path=f"{ANN}/tcga_brca/tcga_brca_subset.csv",
-                data_dir=f"{ROOT}/TCGA-BRCA/{PRE}/",
+                csv_path=f"{ANN}/tcga_brca/tcga_brca_subset.csv.zip",
+                data_dir=f"{ROOT}/TCGA-BRCA_processed/features/",
                 shuffle=False, seed=0, print_info=True,
                 label_dict=self._BRCA_LABEL_DICT,
                 patient_strat=False,
@@ -681,21 +688,21 @@ class Sequential_Generic_MIL_Dataset(ContinualDataset):
             ),
             Generic_MIL_Dataset(
                 csv_path=f"{ANN}/tcga_rcc/tcga_kidney_subset.csv",
-                data_dir=f"{ROOT}/TCGA-RCC/{PRE}/",
+                data_dir=f"{ROOT}/TCGA-RCC_processed/features/",
                 shuffle=False, seed=0, print_info=True,
                 label_dict=self._RCC_LABEL_DICT,
                 patient_strat=False, ignore=[],
             ),
             Generic_MIL_Dataset(
-                csv_path=f"{ANN}/tcga_nsclc/tcga_lung_subset.csv",
-                data_dir=f"{ROOT}/TCGA-NSCLC/{PRE}/",
+                csv_path=f"{ANN}/tcga_nsclc/tcga_lung_subset.csv.zip",
+                data_dir=f"{ROOT}/TCGA-NSCLC_processed/features/",
                 shuffle=False, seed=0, print_info=True,
                 label_dict=self._NSCLC_LABEL_DICT,
                 patient_strat=False, ignore=[],
             ),
-            Generic_MIL_Dataset2(data_dir=f"{ROOT}/TCGA-ESCA/{PRE}/",  label_dict={0: 0, 1: 1}),
-            Generic_MIL_Dataset2(data_dir=f"{ROOT}/TCGA-TGCT/{PRE}/",  label_dict={0: 0, 1: 1}),
-            Generic_MIL_Dataset2(data_dir=f"{ROOT}/TCGA-CESC/{PRE}/",  label_dict={0: 0, 1: 1}),
+            Generic_MIL_Dataset2(data_dir=f"{ROOT}/TCGA-ESCA_processed/features/", label_dict={0: 0, 1: 1}),
+            Generic_MIL_Dataset2(data_dir=f"{ROOT}/TCGA-TGCT_processed/features/", label_dict={0: 0, 1: 1}),
+            Generic_MIL_Dataset2(data_dir=f"{ROOT}/TCGA-CESC_processed/features/", label_dict={0: 0, 1: 1}),
         ]
         self.split_dirs = [
             f"{ANN}/tcga_brca",

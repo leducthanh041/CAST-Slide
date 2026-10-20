@@ -435,6 +435,14 @@ if __name__ == "__main__":
     parser.add_argument("--no_reset_prompt_per_task", action="store_true",
                         help="Keep adapted task prompts across task boundaries.")
     parser.add_argument("--verbose_loss",      action="store_true")
+    parser.add_argument("--fold_start", type=int, default=0)
+    parser.add_argument("--fold_end", type=int, default=-1)
+    parser.add_argument(
+        "--decision_output_dir",
+        type=str,
+        default="",
+        help="Optional directory for per-fold naive Class-IL posterior exports.",
+    )
     parser.add_argument(
         "--result_csv",
         type=str,
@@ -552,10 +560,20 @@ if __name__ == "__main__":
         torch.cuda.reset_peak_memory_stats(device)
     eval_wall_start = time.perf_counter()
 
+    fold_stop = (
+        cfg.training.num_folds
+        if args.fold_end < 0
+        else min(args.fold_end, cfg.training.num_folds)
+    )
+    if not 0 <= args.fold_start < fold_stop:
+        parser.error(
+            f"Invalid fold range [{args.fold_start}, {fold_stop}) for "
+            f"{cfg.training.num_folds} folds"
+        )
     fold_ids = (
         [0]
         if args.tcp_tune_cesc_fold0
-        else range(cfg.training.num_folds)
+        else range(args.fold_start, fold_stop)
     )
     for fold_id in tqdm(fold_ids, desc="Folds"):
         fold = f"fold_{fold_id}"
@@ -688,6 +706,8 @@ if __name__ == "__main__":
         all_aucs      = []
         all_preds_g   = []
         all_targets_g = []
+        all_probs_g   = []
+        all_task_ids  = []
         acc_per_task  = {}
         routing_acc_per_task = {}
         fold_time     = 0.0
@@ -725,6 +745,11 @@ if __name__ == "__main__":
             all_accs.append(task_acc)
             all_preds_g.append(conv_preds)
             all_targets_g.append(conv_targets)
+            if args.mode == "naive":
+                all_probs_g.append(probs_all.astype(np.float32))
+                all_task_ids.append(
+                    np.full(len(targets_all), task_id, dtype=np.int64)
+                )
 
             metric_line = (
                 f"===== [Fold {fold_id}] Task {task_id} "
@@ -854,6 +879,36 @@ if __name__ == "__main__":
 
         all_preds_g   = np.concatenate(all_preds_g)
         all_targets_g = np.concatenate(all_targets_g)
+
+        if args.decision_output_dir:
+            if args.mode != "naive":
+                raise ValueError(
+                    "--decision_output_dir requires mode=naive so all "
+                    "methods use comparable 13-D global posteriors."
+                )
+            decision_dir = Path(args.decision_output_dir)
+            decision_dir.mkdir(parents=True, exist_ok=True)
+            all_probs_g = np.concatenate(all_probs_g).astype(np.float32)
+            all_task_ids = np.concatenate(all_task_ids)
+            counters = np.zeros(num_tasks, dtype=np.int64)
+            slide_ids = []
+            for task_id in all_task_ids:
+                slide_ids.append(
+                    f"task{task_id}_slide{counters[task_id]:05d}"
+                )
+                counters[task_id] += 1
+            output_path = decision_dir / f"cast_slide_fold{fold_id}.npz"
+            np.savez_compressed(
+                output_path,
+                method=np.asarray("cast_slide"),
+                fold=np.asarray(fold_id, dtype=np.int64),
+                after=all_probs_g,
+                labels=all_targets_g.astype(np.int64),
+                preds=all_preds_g.astype(np.int64),
+                task_ids=all_task_ids,
+                slide_ids=np.asarray(slide_ids),
+            )
+            print(f"[INFO] Saved decision-space export: {output_path}")
 
         fold_acc = np.mean(all_accs)
         fold_bacc = np.mean(all_baccs)

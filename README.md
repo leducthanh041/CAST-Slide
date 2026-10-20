@@ -4,18 +4,18 @@ CAST-Slide is a test-time adaptation framework for continual whole-slide image c
 
 ## Highlights
 
-CAST-Slide improves the balance between classification performance and continual-learning stability while correcting uncertain task-level prompt routing under distribution shift. The following OOD results summarize its gains in backward transfer, TCP routing, and forgetting behavior.
+CAST-Slide combines strong per-cohort classification performance with continual-learning stability under distribution shift. The following OOD results highlight retained accuracy, backward transfer, and forgetting behavior.
 
 <table>
   <tr>
     <td width="33.33%" align="center">
-      <a href="images/cast_slide_accuracy_bwt_tradeoff_ood.pdf">
-        <img src="images/cast_slide_accuracy_bwt_tradeoff_ood.png" alt="Accuracy and backward-transfer trade-off on OOD data" width="100%">
+      <a href="images/Accuracy_increasing.png">
+        <img src="images/Accuracy_increasing.png" alt="Per-cohort retained accuracy of CAST-Slide and competing methods on OOD data" width="100%">
       </a>
     </td>
     <td width="33.33%" align="center">
-      <a href="images/cast_slide_tcp_routing_outcome_ood.pdf">
-        <img src="images/cast_slide_tcp_routing_outcome_ood.png" alt="TCP routing corrections made by CAST-Slide on OOD data" width="100%">
+      <a href="images/cast_slide_accuracy_bwt_tradeoff_ood.pdf">
+        <img src="images/cast_slide_accuracy_bwt_tradeoff_ood.png" alt="Accuracy and backward-transfer trade-off on OOD data" width="100%">
       </a>
     </td>
     <td width="33.33%" align="center">
@@ -25,13 +25,13 @@ CAST-Slide improves the balance between classification performance and continual
     </td>
   </tr>
   <tr>
+    <td align="center"><strong>Per-cohort retained accuracy</strong></td>
     <td align="center"><strong>Accuracy vs. backward transfer</strong></td>
-    <td align="center"><strong>Task-routing correction</strong></td>
     <td align="center"><strong>Accuracy vs. forgetting</strong></td>
   </tr>
 </table>
 
-Click any panel to open its publication-quality PDF.
+Click a panel to open the full-resolution radar or the corresponding trade-off PDF.
 
 ## Framework
 
@@ -79,7 +79,7 @@ features: [N, 768]
 coords:   [N, 2]
 ```
 
-Dataset annotations, split files, and feature roots are configured in the YAML files under `configs/`. The PT-first wrapper `tools/run_classil_with_pt_features.py` uses matching `.pt` tensors when available and falls back to HDF5 features when required.
+Dataset annotations, split files, and feature roots are configured in the YAML files under `configs/`. By default they resolve to the sibling `../dataset` directory; set `MERGESLIDE_DATA_ROOT` to override it. The PT-first wrapper `tools/run_classil_with_pt_features.py` uses matching `.pt` tensors when available and falls back to HDF5 features when required.
 
 ## Main Components
 
@@ -125,7 +125,15 @@ checkpoints_ood/
   merged/
 ```
 
-The launchers store hot-write outputs under `MERGESLIDE_LOCAL_ROOT`, which defaults to `/docker/data/$USER/MergeSlide_TTA`, and expose them through repo-local symlinks.
+The launchers are relocatable and derive the repository root from their own location. In this checkout, OOD is the default protocol: checkpoints resolve to `./checkpoints_ood`, while logs and temporary files stay under the repository. Override `MERGESLIDE_DATA_ROOT`, `MERGESLIDE_CHECKPOINT_ROOT`, `MERGESLIDE_LOCAL_ROOT`, or `PYTHON_BIN` when needed.
+
+Validate the cloned layout before a heavy run:
+
+```bash
+python3 tools/validate_ood_layout.py --stage eval
+```
+
+This check is read-only. It verifies six tasks and ten folds; extra legacy `task_6.pt` files are reported but not modified or used.
 
 ## Running CAST-Slide
 
@@ -256,6 +264,10 @@ Reported metrics include accuracy, balanced accuracy, macro F1, per-class precis
 - Run a fold subset first with `FOLD_START` and `FOLD_END` before launching all folds.
 - Keep the same task order, checkpoints, task prompts, and random seed when comparing methods.
 - CLASS-IL adaptation is continual by default; known task boundaries are not used to reset the model.
+
+## Acknowledgements
+
+Our continual-learning pipeline builds on [MergeSlide](https://github.com/caodoanh2001/MergeSlide). WSI preprocessing uses [CLAM](https://github.com/mahmoodlab/CLAM), and slide representations use [TITAN](https://github.com/mahmoodlab/TITAN). Please also acknowledge and cite these projects when using their code or models, and follow their respective licenses and access requirements.
 
 ## Citation
 
