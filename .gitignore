@@ -118,12 +118,28 @@ docs_old/
 /scripts/collect_*.sh
 /scripts/nvidia-smi.sh
 /scripts/generate_cast_slide_heatmaps.sh
+/scripts/run_*heatmap*.sh
+/scripts/run_*attention*.sh
+/scripts/run_sparse_attention_rerender.sh
+/scripts/run_cast_slide_tta_guided_umap.sh
+/scripts/run_naive_loss_landscape.sh
+/scripts/run_task_arrival_landscape.sh
 /configs/attention_maps/
 /tools/heatmaps/
+/tools/attention_maps/
 /tools/plot/
 /tools/statistical_significance/
 /tools/random_search*.py
 /tools/summarize_*.py
+
+# Local attention/heatmap prototypes, including copies outside tools/.
+ATTENTION_HEADS_REPRODUCE.md
+ORIGINAL_ATTENTION_PIPELINE.md
+create_cast_slide_heatmaps.py
+create_continual_attention_grid.py
+create_titan_head4_heatmaps.py
+promote_cesc_head4_candidate.py
+visualize_cesc_head4_alternatives.py
 
 # ---------------------------------------------------------------------------
 # One-off local maintenance scripts
