@@ -79,7 +79,7 @@ features: [N, 768]
 coords:   [N, 2]
 ```
 
-Dataset annotations, split files, and feature roots are configured in the YAML files under `configs/`. The PT-first wrapper `tools/run_classil_with_pt_features.py` uses matching `.pt` tensors when available and falls back to HDF5 features when required.
+Dataset annotations, split files, and feature roots are configured in the YAML files under `configs/`. By default they resolve to the sibling `../dataset` directory; set `MERGESLIDE_DATA_ROOT` to override it. The PT-first wrapper `tools/run_classil_with_pt_features.py` uses matching `.pt` tensors when available and falls back to HDF5 features when required.
 
 ## Main Components
 
@@ -125,7 +125,15 @@ checkpoints_ood/
   merged/
 ```
 
-The launchers store hot-write outputs under `MERGESLIDE_LOCAL_ROOT`, which defaults to `/docker/data/$USER/MergeSlide_TTA`, and expose them through repo-local symlinks.
+The launchers are relocatable and derive the repository root from their own location. In this checkout, OOD is the default protocol: checkpoints resolve to `./checkpoints_ood`, while logs and temporary files stay under the repository. Override `MERGESLIDE_DATA_ROOT`, `MERGESLIDE_CHECKPOINT_ROOT`, `MERGESLIDE_LOCAL_ROOT`, or `PYTHON_BIN` when needed.
+
+Validate the cloned layout before a heavy run:
+
+```bash
+python3 tools/validate_ood_layout.py --stage eval
+```
+
+This check is read-only. It verifies six tasks and ten folds; extra legacy `task_6.pt` files are reported but not modified or used.
 
 ## Running CAST-Slide
 

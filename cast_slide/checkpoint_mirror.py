@@ -1,4 +1,4 @@
-"""Checkpoint save helpers with repo-local and /docker mirroring."""
+"""Checkpoint save helpers with optional primary/mirror storage."""
 
 from __future__ import annotations
 
@@ -16,9 +16,7 @@ NFS_MIRROR_DIR = "checkpoints_nfs_mirror"
 
 
 def get_local_hot_root() -> Path:
-    user = os.environ.get("USER") or "thanhld"
-    default_root = Path("/docker/data") / user / PROJECT_ROOT.name
-    return Path(os.environ.get("MERGESLIDE_LOCAL_ROOT", default_root)).expanduser()
+    return Path(os.environ.get("MERGESLIDE_LOCAL_ROOT", PROJECT_ROOT)).expanduser()
 
 
 def get_nfs_checkpoint_mirror_root() -> Path:
@@ -43,6 +41,9 @@ def get_checkpoint_mirror_path(primary_path: str | Path) -> Path | None:
     """Return the companion checkpoint path, or None when it would duplicate primary."""
     primary = _absolute(primary_path)
     primary_resolved = primary.resolve(strict=False)
+
+    if get_local_hot_root().resolve(strict=False) == PROJECT_ROOT.resolve(strict=False):
+        return None
 
     docker_checkpoint_root = (get_local_hot_root() / CHECKPOINT_DIR).resolve(strict=False)
     nfs_mirror_root = get_nfs_checkpoint_mirror_root()

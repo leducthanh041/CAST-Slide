@@ -19,10 +19,8 @@ set -euo pipefail
 # ---------------------------------------------------------------------------
 # Paths
 # ---------------------------------------------------------------------------
-PROJECT_ROOT="${PROJECT_ROOT:-/mmlab_students/storageStudents/nguyenvd/Thanhld/WSI/MergeSlide_TTA}"
-USER_NAME="${USER:-thanhld}"
-PROJECT_NAME="$(basename "$PROJECT_ROOT")"
-export MERGESLIDE_LOCAL_ROOT="${MERGESLIDE_LOCAL_ROOT:-/docker/data/$USER_NAME/$PROJECT_NAME}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/runtime_paths.sh"
 LOG_DIR="${LOG_DIR:-logs}"
 
 # PT-first wrapper -- fixes NFS HDF5 hang (same fix as eval scripts)
@@ -39,20 +37,11 @@ FOLD_END="${FOLD_END:-10}"
 # Checkpoint save dir: docker hot storage (not NFS root)
 # checkpoints/    -- regular training
 # checkpoints_ood/ -- OOD training  (same level, not nested)
-SAVE_DIR="${SAVE_DIR:-$MERGESLIDE_LOCAL_ROOT/checkpoints_ood/finetuned}"
+SAVE_DIR="${SAVE_DIR:-$MERGESLIDE_CHECKPOINT_ROOT/finetuned}"
 
 # ---------------------------------------------------------------------------
 # Python binary
 # ---------------------------------------------------------------------------
-if [ -z "${PYTHON_BIN:-}" ]; then
-    DEFAULT_PYTHON="/mmlab_students/storageStudents/nguyenvd/anaconda3/envs/mergePre/bin/python3.10"
-    if [ -x "$DEFAULT_PYTHON" ]; then
-        PYTHON_BIN="$DEFAULT_PYTHON"
-    else
-        PYTHON_BIN="python"
-    fi
-fi
-
 cd "$PROJECT_ROOT"
 
 # ---------------------------------------------------------------------------
