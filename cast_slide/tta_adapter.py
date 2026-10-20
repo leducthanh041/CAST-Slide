@@ -818,6 +818,11 @@ class CASTSlide(nn.Module):
         adapt_log["slide/tcp_conf"] = self.last_tcp_conf
         adapt_log["slide/tcp_fallback"] = self.last_tcp_fallback
 
+        if self.n_steps <= 0:
+            self.n_skipped += 1
+            self.backbone.train()
+            return pred_class, probs, pred_task, adapt_log
+
         if entropy < self.entropy_threshold:
             self.n_skipped += 1
             self.backbone.train()

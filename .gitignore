@@ -125,6 +125,13 @@ docs_old/
 /scripts/run_naive_loss_landscape.sh
 /scripts/run_task_arrival_landscape.sh
 /configs/attention_maps/
+/configs/attention_heads/
+/configs/heatmaps/
+/reproducibility_packages/
+/cast_slide/titan_attention.py
+/scripts/*attention*.sh
+/scripts/*head4*.sh
+/scripts/*cesc*alternatives*.sh
 /tools/heatmaps/
 /tools/attention_maps/
 /tools/plot/
